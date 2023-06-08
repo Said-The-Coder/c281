@@ -1,0 +1,112 @@
+#VRML_SIM R2022a utf8
+WorldInfo {
+  info [
+    "In this example, the robot moves down a slope."
+    "The altimeter is used to record the robots height."
+  ]
+  title "Altimeter"
+  basicTimeStep 8
+  contactProperties [
+    ContactProperties {
+      material2 "body"
+      coulombFriction [
+        0
+      ]
+      softCFM 0.1
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.18767449775435266 -0.19052895509025272 0.9635751139194432 5.1633016684909725
+  position -2.192676179407449 1.2495897891658918 0.3852317435295748
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+}
+PointLight {
+  attenuation 0 0 1
+  intensity 0.6
+  location 0.6 0 0
+}
+DEF SLOPE Solid {
+  translation 0 0 0.15
+  rotation 0 1 0 -0.4
+  children [
+    Shape {
+      appearance OsbWood {
+        textureTransform TextureTransform {
+          scale 0.5 2
+        }
+      }
+      geometry DEF BOX0 Box {
+        size 0.8 0.2 0.02
+      }
+    }
+  ]
+  name "green box"
+  boundingObject USE BOX0
+}
+Robot {
+  translation -0.6841614570273409 4.679224163354048e-05 -0.0063879158201144495
+  rotation 0.0001609870532762655 -2.4013897820895326e-09 0.9999999870415842 -3.14154876618374
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 16.7
+        axis 0 1 0
+        anchor 0 0 0.025
+      }
+      device [
+        RotationalMotor {
+          name "left v motor"
+          consumptionFactor 70
+        }
+        PositionSensor {
+          name "left v sensor"
+        }
+      ]
+      endPoint Solid {
+        translation -4.01 0.045 0.025
+        rotation 0.6940722692084338 -0.6940722692084338 0.19112134949217743 -2.75
+        name "left wheel"
+      }
+    }
+    Altimeter {
+    }
+    Transform {
+      translation 0 0 0.0415
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.0820075 0.364731 0.8
+            roughness 1
+            metalness 0
+          }
+          geometry DEF BODY Cylinder {
+            height 0.08
+            radius 0.045
+          }
+        }
+      ]
+    }
+  ]
+  name "MyBot"
+  contactMaterial "body"
+  boundingObject Transform {
+    translation 0 0 0.0415
+    rotation 0 0 1 -1.570796
+    children [
+      USE BODY
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 0.5
+  }
+  controller ""
+  linearVelocity -1.2048116342016733 0 -0.0008750141401630737
+  angularVelocity 1.4422642688607131e-07 -0.010280738796732442 4.80638452403474e-06
+}
